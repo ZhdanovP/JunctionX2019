@@ -33,13 +33,18 @@ def product_data(gtin: Optional[str] = None, tpnb: Optional[str] = None,
     return __make_request_to_tesco(grocery_url, params)
 
 
-def store_location(like: str, offset: int, limit: int = 100) -> Optional[Dict]:
+def store_location(near: str = 'Budapest', like: Optional[str] = None,
+                   offset: int = 0, limit: int = 100) -> Optional[Dict]:
     grocery_url = f'{TESCO_API_URL}/locations/search'
-    params = {'like': f'name:{like}', 'offset': offset, 'limit': limit}
+    params = {'offset': offset, 'limit': limit}
+    if near:
+        params['sort'] = f'near:{near}'
+    if like:
+        params['like'] = f'name:{like}'
     return __make_request_to_tesco(grocery_url, params)
 
 
 if __name__ == '__main__':
     print(grocery_search('milk', 0))
     print(product_data('4548736003446'))
-    print(store_location('budapest', 0))
+    print(store_location())
