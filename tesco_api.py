@@ -2,6 +2,8 @@ from typing import Optional, Dict
 
 from requests import get
 
+from dao import ORM
+
 TESCO_API_KEY = '438ec90168ae495ca1dd9993f594e957'
 TESCO_API_URL = 'https://dev.tescolabs.com'
 
@@ -44,23 +46,13 @@ def store_location(near: str = 'Budapest', like: Optional[str] = None,
     return __make_request_to_tesco(grocery_url, params)
 
 
-class DB:
-    # TODO
-    def get_product(self, gtin) -> Optional[Dict]:
-        return None
-
-    def add_product(self, gtin, product: Dict):
-        print('added product with gtin', gtin)
-        pass
-
-
 def get_product_data(gtin):
-    db = DB()
+    db = ORM()
 
-    product = db.get_product(gtin)
+    product = db.get_cache(gtin)
 
     if product:
-        return product
+        return product[0]
 
     prod = product_data(gtin)
     prod = prod.get('products', [])
@@ -82,7 +74,7 @@ def get_product_data(gtin):
         product = get_necessary_data_from_grocery_search(glosery, tpnc)
 
     if product:
-        db.add_product(gtin, product)
+        db.add_cache(gtin, **product)
 
     return product
 

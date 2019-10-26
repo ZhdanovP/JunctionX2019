@@ -1,21 +1,35 @@
+from typing import List
+
+from sqlalchemy import MetaData, Column, String, DateTime, BigInteger, Integer
 from sqlalchemy import create_engine
-from sqlalchemy import Table, MetaData, Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
+
 import config
 
-metadata = MetaData()
-catalog = Table('catalog', metadata,
-                Column('id', Integer, primary_key=True),
-                Column('gtin', String),
-                Column('quantity', String),
-                Column('shop_id', String),
-                Column('date', DateTime))
+Base = declarative_base()
 
-cache = Table('cache', metadata,
-              Column('gtin', String),
-              Column('image', String),
-              Column('description', String),
-              Column('department', String))
+metadata = MetaData()
+
+
+class Catalog(Base):
+    __tablename__ = 'catalog'
+
+    id = Column(BigInteger, primary_key=True)
+    gtin = Column(String)
+    quantity = Column(Integer)
+    shop_id = Column(String)
+    date = Column(DateTime)
+
+
+class Cache(Base):
+    __tablename__ = 'cache'
+
+    gtin = Column(String, primary_key=True)
+    image = Column(String)
+    name = Column(String)
+    description = Column(String)
+    department = Column(String)
 
 
 class ORM:
@@ -25,7 +39,7 @@ class ORM:
         host = config.db['host']
         port = config.db['port']
         database = config.db['database']
-        db_address = "postgres://{}:{}@{}:{}/{}".format(user, password, host, port, database)
+        db_address = f'postgres://{user}:{password}@{host}:{port}/{database}'
         self.engine = create_engine(db_address)
         self.session = self._get_session()
 
@@ -43,26 +57,23 @@ class ORM:
         self.session = None
 
     def add_catalog(self, gtin: str, quantity: int, shop_id: str):
-        statement = catalog.insert().values(gtin=gtin, quantity=quantity, shop_id=shop_id)
-        self.session.execute(statement)
+        catalog = Catalog(gtin=gtin, quantity=quantity, shop_id=shop_id)
+        self.session.add(catalog)
         self.session.commit()
 
     def get_catalog_all(self):
-        statement = catalog.select()
-        result = self.session.execute(statement)
+        result = self.session.query(Catalog).all()
         return [dict(row) for row in result]
 
     def get_catalog_by_shop(self, shop_id: str):
-        statement = catalog.select().where(catalog.c.shop_id == shop_id)
-        result = self.session.execute(statement)
+        result = self.session.query(Catalog).filter_by(shop_id=shop_id).all()
         return [dict(row) for row in result]
 
-    def add_cache(self, gtin: str, image: str, description: str, department: str):
-        statement = self.session.insert().values(gtin=gtin, image=image, description=description, department=department)
-        self.session.execute(statement)
+    def add_cache(self, gtin: str, name: str, image: str, description: str, department: str):
+        cache = Cache(gtin=gtin, name=name, image=image, description=description, department=department)
+        self.session.add(cache)
         self.session.commit()
 
-    def get_cache(self, gtin: str):
-        statement = cache.select().where(cache.c.gtin == gtin)
-        result = self.session.execute(statement)
+    def get_cache(self, gtin: str) -> List:
+        result = self.session.query(Cache).filter_by(gtin=gtin).all()
         return [dict(row) for row in result]
