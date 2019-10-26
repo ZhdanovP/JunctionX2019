@@ -1,0 +1,22 @@
+.header {
+  display: block;
+  padding: 30px 0;
+}
+
+.header__logo {
+  display: block;
+  float: left;
+  width: 116px;
+  height: 34px;
+  margin-right: 50px;
+
+  vertical-align: middle;
+}
+
+.header__title {
+  display: block;
+  float: right;
+  font-size: 26px;
+  font-weight: normal;
+  vertical-align: middle;
+}
