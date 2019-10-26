@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/static/styles/main.css">
     <link rel="stylesheet" type="text/css" href="/static/styles/print.css" media="print">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 </head>
 <body>
     <header class="header">
@@ -30,34 +30,18 @@
                 <h2 class="shops__title">Shops in Budapest</h2>
                 <form>
                     <ul class="shops__list">
+                    {% for item in shop_list %}
                         <li class="shops__item">
-                            <input type="radio" name="shops__item" value="3245" id="3245" checked>
-                            <label for="3245">
-                                Pushkina, 27
-                                <span class="shops__item-counter">10</span>
+                            <input type="radio"
+                                   name="shops__item"
+                                   value="{{ item.value }}"
+                                   id="{{ item.value }}" {% if item.index == 0 %} checked {% endif %}>
+                            <label for="{{ item.value }}">
+                                {{ item.address }}
+                                <span class="shops__item-counter">{{ item.counter }}</span>
                             </label>
                         </li>
-                        <li class="shops__item">
-                            <input type="radio" name="shops__item" value="6343" id="6343">
-                            <label for="6343">
-                                Tolstogo, 230a
-                                <span class="shops__item-counter">6</span>
-                            </label>
-                        </li>
-                        <li class="shops__item">
-                            <input type="radio" name="shops__item" value="97687" id="97687">
-                            <label for="97687">
-                                Budabuda street, 12
-                                <span class="shops__item-counter">43</span>
-                            </label>
-                        </li>
-                        <li class="shops__item">
-                            <input type="radio" name="shops__item" value="2452" id="2452">
-                            <label for="2452">
-                                Lorem ipsum, 117
-                                <span class="shops__item-counter">0</span>
-                            </label>
-                        </li>
+                    {% endfor %}
                     </ul>
                 </form>
             </div>
