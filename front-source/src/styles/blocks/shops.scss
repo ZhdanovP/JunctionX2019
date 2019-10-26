@@ -1,0 +1,65 @@
+.shops {
+  display: block;
+  clear: both;
+  background: $color-fill-secondary;
+  padding: 20px;
+}
+
+.shops__title {
+  display: block;
+  margin: 0 0 30px 0;
+  color: $color-text;
+  font-size: 26px;
+}
+
+.shops__list {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.shops__item {
+  display: block;
+  margin: 10px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  label {
+    cursor: pointer;
+    position: relative;
+    transition: color 300ms ease-in-out;
+    position: relative;
+
+    &:hover {
+      color: $color-highlight;
+    }
+  }
+
+  input {
+    display: none;
+  }
+
+  input:checked+label {
+    color: $color-highlight;
+  }
+}
+
+.shops__item-counter {
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: 2px;
+  min-width: 17px;
+  margin-left: 4px;
+  font-size: 11px;
+  border-radius: 50%;
+  background: $color-text;
+  color: $color-fill-primary;
+  padding: 2px 4px;
+  font-weight: bold;
+}
