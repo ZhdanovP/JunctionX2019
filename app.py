@@ -7,9 +7,33 @@ app = Flask(__name__)
 app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
 
+shop_list = [
+    {
+        'value': 3245,
+        'counter': 10,
+        'address': 'Pushkina, 27'
+    },
+    {
+        'value': 6343,
+        'counter': 6,
+        'address': 'Tolstogo, 230a'
+    },
+    {
+        'value': 97687,
+        'counter': 43,
+        'address': 'Budabuda street, 12'
+    },
+    {
+        'value': 2452,
+        'counter': 0,
+        'address': 'Lorem ipsum, 117'
+    }
+]
+
 @app.route('/')
 def hello_world():
-    return render_template('index.html', title='JunctionX')
+    shop_list_sorted = sorted(shop_list, key=lambda x: x['counter'], reverse=True)
+    return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted)
 
 
 @app.route('/catalog/add', methods=['POST'])
