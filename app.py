@@ -91,6 +91,7 @@ good_list = [
 @app.route('/')
 def hello_world():
     shop_list_sorted = sorted(shop_list, key=lambda x: x['counter'], reverse=True)
+
     return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted, good_list=good_list)
 
 

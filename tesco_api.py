@@ -98,10 +98,38 @@ def get_necessary_data_from_grocery_search(grocery_search: Dict, tpnc: str) -> O
             'price': result.get('price')}
 
 
+def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Budapest'):
+    """
+    The function is used only one time to fill `Shop` table by values.
+    :param stores: Result of store_location() function works
+    :param filter_town: A town name to filter stores for
+    :return: Nothing, just placed target stores to the DB
+    """
+    all_stores = stores.get('results', [])
+    target_stores = []
+    for store in all_stores:
+        store_data = store.get('location', {})
+        coords = store_data.get('geo', {}).get('coordinates', {})
+        target_stores.append({'_id': store_data.get('id'),
+                              'address': store_data.get('contact', {}).get('address').get('town'),
+                              'lon': coords.get('longitude'),
+                              'lat': coords.get('latitude'),
+                              '_type': store_data.get('classification', {}).get('type'),
+                              'name': store_data.get('name')})
+
+    if filter_town:
+        target_stores = [store for store in target_stores if filter_town in store.get('address')]
+
+    orm = ORM()
+    for store in target_stores:
+        orm.add_shop(**store)
+
+
 if __name__ == '__main__':
     # Tests
     # glosery = grocery_search('Tescobritish', 0)
     # print(get_necessary_data_from_grocery_search(glosery, 254656543))
     # print(product_data('4548736003446'))
-    # print(store_location())
+    # stores = store_location()
+    # extract_stores_from_results(stores)
     print(get_product_data('05010003000131'))

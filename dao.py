@@ -109,12 +109,15 @@ class ORM:
         result = self.session.query(returned_class).filter_by(**values).all()
         return [row.to_dict() for row in result]
 
+    def __get_all_stuff(self, returned_class):
+        result = self.session.query(returned_class).all()
+        return [row.to_dict() for row in result]
+
     def add_catalog(self, gtin: str, quantity: int, shop_id: str):
         self.__add_sth(Catalog, gtin=gtin, quantity=quantity, shop_id=shop_id)
 
     def get_catalog_all(self):
-        result = self.session.query(Catalog).all()
-        return [row.to_dict() for row in result]
+        return self.__get_all_stuff(Catalog)
 
     def get_catalog_by_shop(self, shop_id: str):
         return self.__get_sth_by_values(Catalog, shop_id=shop_id)
@@ -133,18 +136,19 @@ class ORM:
     def get_shop_by_id(self, shop_id):
         return self.__get_sth_by_values(Shop, id=shop_id)
 
+    def get_shops(self):
+        return self.__get_all_stuff(Shop)
+
 
 if __name__ == '__main__':
     orm = ORM()
-    shop_id = "fdacbf60-7b73-4678-86f4-266b86750e3b"
-    orm.add_shop(shop_id, "Budapest, VIII. kerület", "Expressz",
-                 "TESCO Expressz Bp. - Mátyás tér", 19.079964, 47.492391)
+    # shop_id = "fdacbf60-7b73-4678-86f4-266b86750e3b"
+    # orm.add_shop(shop_id, "Budapest, VIII. kerület", "Expressz",
+    #              "TESCO Expressz Bp. - Mátyás tér", 19.079964, 47.492391)
+    #
+    # orm.add_catalog('0', 1, shop_id)
+    # orm.add_catalog('1', 1, shop_id)
+    # orm.add_catalog('2', 1, shop_id)
+    # orm.add_catalog('3', 1, shop_id)
 
-    orm.add_catalog('0', 1, shop_id)
-    orm.add_catalog('1', 1, shop_id)
-    orm.add_catalog('2', 1, shop_id)
-    orm.add_catalog('3', 1, shop_id)
-
-
-
-    print(orm.get_shop_by_id(shop_id))
+    print(orm.get_shops())
