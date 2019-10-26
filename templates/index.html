@@ -25,7 +25,6 @@
     </header>
     <main class="body">
         <div class="container">
-
             <div class="shops">
                 <h2 class="shops__title">Shops in Budapest</h2>
                 <form>
@@ -49,134 +48,29 @@
             <div class="goods">
                 <h2 class="goods__title">Goods for free</h2>
 
-                <div class="goods__section" data-shop-id="3245">
-                    <h3 class="goods__sub-title">Bakery</h3>
+                {% for shop in good_list %}
+                <div class="goods__section" data-shop-id="{{ shop.id }}">
+                    {% if shop.goods|length > 0 %}
+                    <h3 class="goods__sub-title">{{ shop.name }}</h3>
                     <ul>
+                    {% for item in shop.goods %}
                         <li class="goods__item">
                             <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
+                                <img src="{{ item.image }}" alt="Good picture">
                             </div>
                             <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Lorem ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">7</span>
+                                <span class="goods__info-row goods__info-row--title">{{ item.title }}</span>
+                                <span class="goods__info-row goods__info-row--desc">{{ item.desc }}</span>
+                                <span class="goods__info-row goods__info-row--qtt">{{ item.qtt }}</span>
                             </div>
                         </li>
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">12</span>
-                            </div>
-                        </li>
+                    {% endfor %}
                     </ul>
-
-                    <h3 class="goods__sub-title">Lorem ipsum</h3>
-
-
-                    <ul>
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">2</span>
-                            </div>
-                        </li>
-
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">120</span>
-                            </div>
-                        </li>
-                    </ul>
+                    {% else %}
+                        <div class="message">no products found :(</div>
+                    {% endif %}
                 </div>
-
-                <div class="goods__section" data-shop-id="6343">
-                    <h3 class="goods__sub-title">Lorem ipsum</h3>
-
-
-                    <ul>
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">2</span>
-                            </div>
-                        </li>
-
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">120</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="goods__section" data-shop-id="97687">
-                    <h3 class="goods__sub-title">Bakery</h3>
-                    <ul>
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">12</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <h3 class="goods__sub-title">Lorem ipsum</h3>
-
-
-                    <ul>
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">2</span>
-                            </div>
-                        </li>
-
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                <img src="/static/images/good.png" alt="Good picture">
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
-                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
-                                <span class="goods__info-row goods__info-row--qtt">120</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="goods__section" data-shop-id="2452">
-                    <div class="message">no products found :(</div>
-                </div>
+                {% endfor %}
             </div>
 
         </div>
