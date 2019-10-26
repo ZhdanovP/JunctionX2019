@@ -65,12 +65,11 @@ def get_product_data(gtin):
 
     offset = 0
     glosery = grocery_search(descr, offset)
-    offset += 1
     product = get_necessary_data_from_grocery_search(glosery, tpnc)
 
     while not product and offset < 10:
-        glosery = grocery_search(first_word_of_descr, offset)
         offset += 1
+        glosery = grocery_search(first_word_of_descr, offset)
         product = get_necessary_data_from_grocery_search(glosery, tpnc)
 
     if product:
@@ -95,7 +94,8 @@ def get_necessary_data_from_grocery_search(grocery_search: Dict, tpnc: str) -> O
     result = results[0]
     description = result.get('description')[0] if result.get('description') else ''
     return {'image': result.get('image'), 'name': result.get('name'), 'description': description,
-            'department': result.get('department')}
+            'department': result.get('department'), 'weight': result.get('AverageSellingUnitWeight'),
+            'price': result.get('price')}
 
 
 if __name__ == '__main__':
