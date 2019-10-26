@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from sqlalchemy import MetaData, Column, String, DateTime, BigInteger, Integer
@@ -19,7 +20,13 @@ class Catalog(Base):
     gtin = Column(String)
     quantity = Column(Integer)
     shop_id = Column(String)
-    date = Column(DateTime)
+    date = Column(DateTime, default=datetime.datetime.utcnow)
+
+    def to_dict(self):
+        return {'gtin': self.gtin,
+                'quantity': self.quantity,
+                'shop_id': self.shop_id,
+                'date': self.date}
 
 
 class Cache(Base):
@@ -30,6 +37,13 @@ class Cache(Base):
     name = Column(String)
     description = Column(String)
     department = Column(String)
+
+    def to_dict(self):
+        return {'gtin': self.gtin,
+                'image': self.image,
+                'name': self.name,
+                'description': self.description,
+                'department': self.department}
 
 
 class ORM:
@@ -63,11 +77,11 @@ class ORM:
 
     def get_catalog_all(self):
         result = self.session.query(Catalog).all()
-        return [dict(row) for row in result]
+        return [row.to_dict() for row in result]
 
     def get_catalog_by_shop(self, shop_id: str):
         result = self.session.query(Catalog).filter_by(shop_id=shop_id).all()
-        return [dict(row) for row in result]
+        return [row.to_dict() for row in result]
 
     def add_cache(self, gtin: str, name: str, image: str, description: str, department: str):
         cache = Cache(gtin=gtin, name=name, image=image, description=description, department=department)
@@ -76,4 +90,14 @@ class ORM:
 
     def get_cache(self, gtin: str) -> List:
         result = self.session.query(Cache).filter_by(gtin=gtin).all()
-        return [dict(row) for row in result]
+        return [row.to_dict() for row in result]
+
+
+if __name__ == '__main__':
+    orm = ORM()
+    orm.add_catalog('000', 1, '123')
+    orm.add_catalog('1', 1, '123')
+    orm.add_catalog('2', 1, '123')
+    orm.add_catalog('3', 1, '123')
+
+    print(orm.get_catalog_all())
