@@ -16,7 +16,7 @@ cache = Table('cache', metadata,
               Column('image', String),
               Column('description', String),
               Column('department', String),
-              Column('name'), String)
+              Column('name', String))
 
 
 class ORM:
