@@ -30,10 +30,68 @@ shop_list = [
     }
 ]
 
+good_list = [
+    {
+        'id': 3245,
+        'name': 'Bakery',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 7
+            },
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 10
+            }
+        ]
+    },
+    {
+        'id': 97687,
+        'name': 'Pyaterochka',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 9
+            },
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 12
+            }
+        ]
+    },
+    {
+        'id': 6343,
+        'name': 'Magnit',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 7
+            }
+        ]
+    },
+    {
+        'id': 2452,
+        'name': 'Bahetle',
+        'goods': [
+        ]
+    }
+]
+
+
 @app.route('/')
 def hello_world():
     shop_list_sorted = sorted(shop_list, key=lambda x: x['counter'], reverse=True)
-    return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted)
+    return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted, good_list=good_list)
 
 
 @app.route('/catalog/add', methods=['POST'])
