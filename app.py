@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask import request
 import dao
 import os
@@ -8,10 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    hello = {
-        "hello": "world"
-    }
-    return jsonify(hello)
+    return render_template('index.html', title='JunctionX')
 
 
 @app.route('/add', methods=['POST'])
