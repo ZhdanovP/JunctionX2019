@@ -4,6 +4,7 @@ from dao import ORM
 import os
 
 app = Flask(__name__)
+app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
 
 @app.route('/')

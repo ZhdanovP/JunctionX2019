@@ -15,7 +15,8 @@ cache = Table('cache', metadata,
               Column('gtin', String),
               Column('image', String),
               Column('description', String),
-              Column('department', String))
+              Column('department', String),
+              Column('name'), String)
 
 
 class ORM:
@@ -57,8 +58,11 @@ class ORM:
         result = self.session.execute(statement)
         return [dict(row) for row in result]
 
-    def add_cache(self, gtin: str, image: str, description: str, department: str):
-        statement = self.session.insert().values(gtin=gtin, image=image, description=description, department=department)
+    def add_cache(self, gtin: str, image: str, description: str, department: str, name: str):
+        statement = self.session.insert().values(gtin=gtin, image=image,
+                                                 description=description,
+                                                 department=department,
+                                                 name=name)
         self.session.execute(statement)
         self.session.commit()
 
