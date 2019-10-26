@@ -119,8 +119,10 @@ class ORM:
     def get_catalog_by_shop(self, shop_id: str):
         return self.__get_sth_by_values(Catalog, shop_id=shop_id)
 
-    def add_cache(self, gtin: str, name: str, image: str, description: str, department: str):
-        self.__add_sth(Cache, gtin=gtin, name=name, image=image, description=description, department=department)
+    def add_cache(self, gtin: str, name: str, image: str, description: str, department: str, weight: float,
+                  price: float):
+        self.__add_sth(Cache, gtin=gtin, name=name, image=image, description=description, department=department,
+                       weight=weight, price=price)
 
     def get_cache(self, gtin: str) -> List:
         return self.__get_sth_by_values(Cache, gtin=gtin)
@@ -142,5 +144,7 @@ if __name__ == '__main__':
     orm.add_catalog('1', 1, shop_id)
     orm.add_catalog('2', 1, shop_id)
     orm.add_catalog('3', 1, shop_id)
+
+
 
     print(orm.get_shop_by_id(shop_id))
