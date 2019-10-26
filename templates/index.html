@@ -20,18 +20,46 @@
     <header class="header">
         <div class="container">
             <img src="/static/images/logo.svg" alt="TESCO logo" class="header__logo">
-            <h1 class="header__title">Budapest - <span class="bold color-highlighted">Free Food</span></h1>
+            <h1 class="header__title">Free Food</h1>
         </div>
     </header>
     <main class="body">
         <div class="container">
+
+            <div class="cities">
+                <ul>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');" class="cities__root">Hungary:</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');" class="cities__active">Budapest</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Debrecen</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Szeged</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Miskolc</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Pécs</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Győr</a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="shops">
-                <h2 class="shops__title">Shops in Budapest</h2>
                 <form>
                     <ul class="shops__list">
                     {% for item in shop_list %}
                         <li class="shops__item">
                             <input type="radio"
+                                   data-longitude="{{ item.longitude }}"
+                                   data-latitude="{{ item.latitude }}"
                                    name="shops__item"
                                    value="{{ item.value }}"
                                    id="{{ item.value }}" {% if item.index == 0 %} checked {% endif %}>
@@ -43,10 +71,15 @@
                     {% endfor %}
                     </ul>
                 </form>
+
+                <div class="map shops__map">
+                    <span class="map__loader">Loading map...</span>
+                    <iframe src="" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                </div>
             </div>
 
             <div class="goods">
-                <h2 class="goods__title">Goods for free</h2>
+                <h2 class="goods__title">Groceries for free</h2>
 
                 {% for shop in good_list %}
                 <div class="goods__section" data-shop-id="{{ shop.id }}">
@@ -56,7 +89,11 @@
                     {% for item in shop.goods %}
                         <li class="goods__item">
                             <div class="goods__image">
-                                <img src="{{ item.image }}" alt="Good picture">
+                                {% if item.image %}
+                                <img src="{{ item.image }}" alt="{{ item.title }}">
+                                {% else %}
+                                <img src="/static/images/good.png" alt="{{ item.title }}">
+                                {% endif %}
                             </div>
                             <div class="goods__info">
                                 <span class="goods__info-row goods__info-row--title">{{ item.title }}</span>
