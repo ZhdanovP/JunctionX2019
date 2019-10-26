@@ -5,18 +5,27 @@
 
 .goods__title {
   display: block;
-  margin: 30px 0 30px 0;
-  color: $color-primary;
-  font-size: 26px;
+  margin: 40px 0 30px 0;
+  color: $color-text;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .goods__sub-title {
   display: block;
-  margin: 30px 0;
+  margin: 30px 0 6px 0;
+  font-weight: normal;
+  font-size: 18px;
 }
 
 .goods__section {
   display: none;
+  margin: 30px 0;
+
+  ul {
+    border: 1px solid #e2e2e2;
+    padding: 0 20px;
+  }
 }
 
 .goods__section--visible {
@@ -58,7 +67,7 @@
 
 .goods__info-row--title {
   color: $color-primary;
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
@@ -70,12 +79,12 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: $color-highlight;
+  background: $color-primary;
   padding: 6px;
   border-radius: 50%;
   color: $color-fill-primary;
   font-weight: bold;
   font-size: 14px;
   transform: translate(-10%, -30%);
-  box-shadow: 2px 2px 3px 0px #0000004a;
+  box-shadow: 1px 2px 3px 0px #0000004a;
 }
