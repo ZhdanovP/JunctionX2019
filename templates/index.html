@@ -58,11 +58,11 @@
                     {% for item in shop_list %}
                         <li class="shops__item">
                             <input type="radio"
-                                   data-longitude="{{ item.longitude }}"
-                                   data-latitude="{{ item.latitude }}"
+                                   data-longitude="{{ item.lon }}"
+                                   data-latitude="{{ item.lat }}"
                                    name="shops__item"
                                    value="{{ item.value }}"
-                                   id="{{ item.value }}" {% if item.index == 0 %} checked {% endif %}>
+                                   id="{{ item.value }}" {% if loop.index0==0 %} checked {% endif %}>
                             <label for="{{ item.value }}">
                                 {{ item.address }}
                                 <span class="shops__item-counter">{{ item.counter }}</span>
@@ -83,26 +83,29 @@
 
                 {% for shop in good_list %}
                 <div class="goods__section" data-shop-id="{{ shop.id }}">
-                    {% if shop.goods|length > 0 %}
-                    <h3 class="goods__sub-title">{{ shop.name }}</h3>
-                    <ul>
-                    {% for item in shop.goods %}
-                        <li class="goods__item">
-                            <div class="goods__image">
-                                {% if item.image %}
+                    {% if shop.goods | length > 0 %}
+                    {% for good in shop.goods %}
+                    <h3 class="goods__sub-title">{{ good.category }}</h3>
+                        <ul>
+                        {% for item in good.products %}
+                            <li class="goods__item">
+                                <div class="goods__image">
+                                    {% if item.image %}
                                 <img src="{{ item.image }}" alt="{{ item.title }}">
                                 {% else %}
                                 <img src="/static/images/good.png" alt="{{ item.title }}">
                                 {% endif %}
-                            </div>
-                            <div class="goods__info">
-                                <span class="goods__info-row goods__info-row--title">{{ item.title }}</span>
-                                <span class="goods__info-row goods__info-row--desc">{{ item.desc }}</span>
-                                <span class="goods__info-row goods__info-row--qtt">{{ item.qtt }}</span>
-                            </div>
-                        </li>
+                                </div>
+                                <div class="goods__info">
+                                    <span class="goods__info-row goods__info-row--title">{{ item.title }}</span>
+                                    <span class="goods__info-row goods__info-row--desc">{{ item.desc }}</span>
+                                    <span class="goods__info-row goods__info-row--qtt">{{ item.qtt }}</span>
+                                </div>
+                            </li>
+                        {% endfor %}
+
+                        </ul>
                     {% endfor %}
-                    </ul>
                     {% else %}
                         <div class="message">no products found :(</div>
                     {% endif %}

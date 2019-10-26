@@ -11,77 +11,96 @@ shop_list = [
     {
         'value': 3245,
         'counter': 10,
-        'address': 'Pushkina, 27'
+        'address': 'Pushkina, 27',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 6343,
         'counter': 6,
-        'address': 'Tolstogo, 230a'
+        'address': 'Tolstogo, 230a',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 97687,
         'counter': 43,
-        'address': 'Budabuda street, 12'
+        'address': 'Budabuda street, 12',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 2452,
         'counter': 0,
-        'address': 'Lorem ipsum, 117'
+        'address': 'Lorem ipsum, 117',
+        'lat': 47.492391,
+        'lon': 19.079964
     }
 ]
 
 good_list = [
     {
         'id': 3245,
-        'name': 'Bakery',
         'goods': [
             {
-                'image': '/static/images/good.png',
-                'title': 'Lorem ipsum dolor',
-                'desc': 'Dolor lorem forem ipsum dolor amet',
-                'qtt': 7
-            },
-            {
-                'image': '/static/images/good.png',
-                'title': 'Lorem ipsum dolor',
-                'desc': 'Dolor lorem forem ipsum dolor amet',
-                'qtt': 10
+                'category': 'Bakery',
+                'products': [
+                            {
+                                'image': '/static/images/good.png',
+                                'title': 'Lorem ipsum dolor',
+                                'desc': 'Dolor lorem forem ipsum dolor amet',
+                                'qtt': 7
+                            },
+                            {
+                                'image': '/static/images/good.png',
+                                'title': 'Lorem ipsum dolor',
+                                'desc': 'Dolor lorem forem ipsum dolor amet',
+                                'qtt': 10
+                            }
+                        ]
             }
         ]
     },
     {
         'id': 97687,
-        'name': 'Pyaterochka',
         'goods': [
             {
-                'image': '/static/images/good.png',
-                'title': 'Lorem ipsum dolor',
-                'desc': 'Dolor lorem forem ipsum dolor amet',
-                'qtt': 9
-            },
-            {
-                'image': '/static/images/good.png',
-                'title': 'Lorem ipsum dolor',
-                'desc': 'Dolor lorem forem ipsum dolor amet',
-                'qtt': 12
+                'category': 'Water',
+                'products': [
+                            {
+                                'image': '/static/images/good.png',
+                                'title': 'Lorem ipsum dolor',
+                                'desc': 'Dolor lorem forem ipsum dolor amet',
+                                'qtt': 7
+                            },
+                            {
+                                'image': '/static/images/good.png',
+                                'title': 'Lorem ipsum dolor',
+                                'desc': 'Dolor lorem forem ipsum dolor amet',
+                                'qtt': 10
+                            }
+                        ]
             }
         ]
     },
     {
         'id': 6343,
-        'name': 'Magnit',
         'goods': [
             {
-                'image': '/static/images/good.png',
-                'title': 'Lorem ipsum dolor',
-                'desc': 'Dolor lorem forem ipsum dolor amet',
-                'qtt': 7
+                'category': 'Meat',
+                'products': [
+                            {
+                                'image': '/static/images/good.png',
+                                'title': 'Lorem ipsum dolor',
+                                'desc': 'Dolor lorem forem ipsum dolor amet',
+                                'qtt': 7
+                            }
+                        ]
             }
         ]
     },
     {
         'id': 2452,
-        'name': 'Bahetle',
         'goods': [
         ]
     }
