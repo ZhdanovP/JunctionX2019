@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 from requests import get
 
@@ -124,6 +124,14 @@ def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Buda
     for store in target_stores:
         orm.add_shop(**store)
 
+
+def get_shop_list() -> List[Dict]:
+    orm = ORM()
+    shops = orm.get_shops()
+
+    shop_list = [shop.update({'count': 0}) for shop in shops]
+
+    return shop_list
 
 if __name__ == '__main__':
     # Tests

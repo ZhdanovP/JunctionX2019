@@ -61,11 +61,11 @@
                                    data-longitude="{{ item.lon }}"
                                    data-latitude="{{ item.lat }}"
                                    name="shops__item"
-                                   value="{{ item.value }}"
-                                   id="{{ item.value }}" {% if loop.index0==0 %} checked {% endif %}>
-                            <label for="{{ item.value }}">
+                                   value="{{ item.id }}"
+                                   id="{{ item.id }}" {% if loop.index0==0 %} checked {% endif %}>
+                            <label for="{{ item.id }}">
                                 {{ item.address }}
-                                <span class="shops__item-counter">{{ item.counter }}</span>
+                                <span class="shops__item-counter">{{ item.count }}</span>
                             </label>
                         </li>
                     {% endfor %}
