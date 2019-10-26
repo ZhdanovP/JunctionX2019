@@ -20,7 +20,7 @@ def __make_request_to_tesco(url: str, params: Dict) -> Optional[Dict]:
         print(e)
 
 
-def grocery_search(query: str, offset: int, limit: int = 100) -> Optional[Dict]:
+def grocery_search(query: str, offset: int = 0, limit: int = 10) -> Optional[Dict]:
     grocery_url = f'{TESCO_API_URL}/grocery/products'
     params = {'query': query, 'offset': offset, 'limit': limit}
     return __make_request_to_tesco(grocery_url, params)
@@ -44,7 +44,72 @@ def store_location(near: str = 'Budapest', like: Optional[str] = None,
     return __make_request_to_tesco(grocery_url, params)
 
 
+class DB:
+    # TODO
+    def get_product(self, gtin) -> Optional[Dict]:
+        return None
+
+    def add_product(self, gtin, product: Dict):
+        print('added product with gtin', gtin)
+        pass
+
+
+def get_product_data(gtin):
+    db = DB()
+
+    product = db.get_product(gtin)
+
+    if product:
+        return product
+
+    prod = product_data(gtin)
+    prod = prod.get('products', [])
+    if not prod:
+        print(f'There is not products with gtin {gtin}')
+        return None
+    descr = prod[0].get('description')
+    first_word_of_descr = descr.split(' ')[0]
+    tpnc = prod[0].get('tpnc')
+
+    offset = 0
+    glosery = grocery_search(descr, offset)
+    offset += 1
+    product = get_necessary_data_from_grocery_search(glosery, tpnc)
+
+    while not product and offset < 10:
+        glosery = grocery_search(first_word_of_descr, offset)
+        offset += 1
+        product = get_necessary_data_from_grocery_search(glosery, tpnc)
+
+    if product:
+        db.add_product(gtin, product)
+
+    return product
+
+
+def get_necessary_data_from_grocery_search(grocery_search: Dict, tpnc: str) -> Optional[Dict]:
+    """
+    Extracts necessary info from product json.
+    Returns: 'image', 'name' and 'description'
+    """
+    products_list = grocery_search.get('uk', {}).get('ghs', {}).get('products', {}).get('results', [])
+    if not products_list:
+        print('There are no products')
+        return None
+    results = [result for result in products_list if str(result.get('id')) == tpnc]
+    if not results:
+        print(f'There are no results with tpnc {tpnc}')
+        return {}
+    result = results[0]
+    description = result.get('description')[0] if result.get('description') else ''
+    return {'image': result.get('image'), 'name': result.get('name'), 'description': description,
+            'department': result.get('department')}
+
+
 if __name__ == '__main__':
-    print(grocery_search('milk', 0))
-    print(product_data('4548736003446'))
-    print(store_location())
+    # Tests
+    # glosery = grocery_search('Tescobritish', 0)
+    # print(get_necessary_data_from_grocery_search(glosery, 254656543))
+    # print(product_data('4548736003446'))
+    # print(store_location())
+    print(get_product_data('05010003000131'))
