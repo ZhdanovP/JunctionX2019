@@ -1,0 +1,310 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  min-width: 320px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1.2;
+  font-family: 'Roboto', sans-serif;
+  color: #333333;
+  background: #ffffff;
+}
+
+body:after {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  top: -100px;
+  left: 0;
+}
+
+@media (max-width: 767px) {
+  body:after {
+    content: "mobile";
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body:after {
+    content: "tablet";
+  }
+}
+
+@media (min-width: 1024px) {
+  body:after {
+    content: "desktop";
+  }
+}
+
+a {
+  color: inherit;
+  outline: none;
+}
+
+ol, ul {
+  list-style: none;
+  list-style-position: inside;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+  content: "";
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.color-highlighted {
+  color: #ed1d24;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.body {
+  display: block;
+  min-height: calc(100vh - 133px);
+}
+
+.container {
+  display: block;
+  box-sizing: border-box;
+  max-width: 800px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.container:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.footer {
+  background: #f6f6f6;
+  letter-spacing: 1px;
+  padding: 20px 0;
+}
+
+.goods {
+  display: block;
+  clear: both;
+}
+
+.goods__title {
+  display: block;
+  margin: 30px 0 30px 0;
+  color: #01539f;
+  font-size: 26px;
+}
+
+.goods__sub-title {
+  display: block;
+  margin: 30px 0;
+}
+
+.goods__section {
+  display: none;
+}
+
+.goods__section--visible {
+  display: block;
+}
+
+.goods__item {
+  display: block;
+  margin: 20px 0;
+  position: relative;
+}
+
+.goods__item:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+
+.goods__image {
+  display: block;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100px;
+  float: left;
+}
+
+.goods__image img {
+  max-width: 100%;
+  height: auto;
+  border: none;
+}
+
+.goods__info {
+  display: block;
+  box-sizing: border-box;
+  float: left;
+  width: calc(100% - 100px);
+  padding-left: 30px;
+}
+
+.goods__info-row {
+  display: block;
+}
+
+.goods__info-row--title {
+  color: #01539f;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.goods__info-row--qtt {
+  display: block;
+  box-sizing: border-box;
+  min-width: 28px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #ed1d24;
+  padding: 6px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  transform: translate(-10%, -30%);
+  box-shadow: 2px 2px 3px 0px #0000004a;
+}
+
+.header {
+  display: block;
+  padding: 30px 0;
+}
+
+.header__logo {
+  display: block;
+  float: left;
+  width: 116px;
+  height: 34px;
+  margin-right: 50px;
+  vertical-align: middle;
+}
+
+.header__title {
+  display: block;
+  float: right;
+  font-size: 26px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+.message {
+  margin: 40px 0 20px 0;
+  font-size: 50px;
+  opacity: 0.33;
+}
+
+.shops {
+  display: block;
+  clear: both;
+  background: #f6f6f6;
+  padding: 20px;
+}
+
+.shops__title {
+  display: block;
+  margin: 0 0 30px 0;
+  color: #333333;
+  font-size: 26px;
+}
+
+.shops__list {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.shops__item {
+  display: block;
+  margin: 10px 0;
+}
+
+.shops__item:first-child {
+  margin-top: 0;
+}
+
+.shops__item:last-child {
+  margin-bottom: 0;
+}
+
+.shops__item label {
+  cursor: pointer;
+  position: relative;
+  transition: color 300ms ease-in-out;
+  position: relative;
+}
+
+.shops__item label:hover {
+  color: #ed1d24;
+}
+
+.shops__item input {
+  display: none;
+}
+
+.shops__item input:checked + label {
+  color: #ed1d24;
+}
+
+.shops__item-counter {
+  display: inline-block;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: 2px;
+  min-width: 17px;
+  margin-left: 4px;
+  font-size: 11px;
+  border-radius: 50%;
+  background: #333333;
+  color: #ffffff;
+  padding: 2px 4px;
+  font-weight: bold;
+}

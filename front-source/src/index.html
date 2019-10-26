@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>TESCO - Free Food</title>
+
+    <meta name="keywords" content="tesco, free, food" />
+    <meta name="description" content="Tesco free food in your city" />
+    <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' >
+
+    <link rel="icon" type="img/png" href="//tesco.hu/img/tescoce_hu/fav.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="/styles/print.css" media="print">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <img src="/images/logo.svg" alt="TESCO logo" class="header__logo">
+            <h1 class="header__title">Budapest - <span class="bold color-highlighted">Free Food</span></h1>
+        </div>
+    </header>
+    <main class="body">
+        <div class="container">
+
+            <div class="shops">
+                <h2 class="shops__title">Shops in Budapest</h2>
+                <form>
+                    <ul class="shops__list">
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="3245" id="3245" checked>
+                            <label for="3245">
+                                Pushkina, 27
+                                <span class="shops__item-counter">10</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="6343" id="6343">
+                            <label for="6343">
+                                Tolstogo, 230a
+                                <span class="shops__item-counter">6</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="97687" id="97687">
+                            <label for="97687">
+                                Budabuda street, 12
+                                <span class="shops__item-counter">43</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="2452" id="2452">
+                            <label for="2452">
+                                Lorem ipsum, 117
+                                <span class="shops__item-counter">0</span>
+                            </label>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+            <div class="goods">
+                <h2 class="goods__title">Goods for free</h2>
+
+                <div class="goods__section" data-shop-id="3245">
+                    <h3 class="goods__sub-title">Bakery</h3>
+                    <ul>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Lorem ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">7</span>
+                            </div>
+                        </li>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">12</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3 class="goods__sub-title">Lorem ipsum</h3>
+
+
+                    <ul>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">2</span>
+                            </div>
+                        </li>
+
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">120</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="goods__section" data-shop-id="6343">
+                    <h3 class="goods__sub-title">Lorem ipsum</h3>
+
+
+                    <ul>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">2</span>
+                            </div>
+                        </li>
+
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">120</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="goods__section" data-shop-id="97687">
+                    <h3 class="goods__sub-title">Bakery</h3>
+                    <ul>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">12</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <h3 class="goods__sub-title">Lorem ipsum</h3>
+
+
+                    <ul>
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Dolor orem ipsum</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">2</span>
+                            </div>
+                        </li>
+
+                        <li class="goods__item">
+                            <div class="goods__image">
+                                <img src="/images/good.png" alt="Good picture">
+                            </div>
+                            <div class="goods__info">
+                                <span class="goods__info-row goods__info-row--title">Ipsum dolor</span>
+                                <span class="goods__info-row goods__info-row--desc">Dolor lorem forem ipsum dolor amet</span>
+                                <span class="goods__info-row goods__info-row--qtt">120</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="goods__section" data-shop-id="2452">
+                    <div class="message">no products found :(</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            #JunctionXBudapest2019
+        </div>
+    </footer>
+
+    <script src="/scripts/shops.js"></script>
+</body>
+</html>
