@@ -110,15 +110,16 @@ def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Buda
     for store in all_stores:
         store_data = store.get('location', {})
         coords = store_data.get('geo', {}).get('coordinates', {})
+        address = store_data.get('contact', {}).get('address')
+        if filter_town and filter_town not in address.get('town'):
+            continue
+        street = address.get('lines', [{}])[0].get('text')
         target_stores.append({'_id': store_data.get('id'),
-                              'address': store_data.get('contact', {}).get('address').get('town'),
+                              'address': street,
                               'lon': coords.get('longitude'),
                               'lat': coords.get('latitude'),
                               '_type': store_data.get('classification', {}).get('type'),
                               'name': store_data.get('name')})
-
-    if filter_town:
-        target_stores = [store for store in target_stores if filter_town in store.get('address')]
 
     orm = ORM()
     for store in target_stores:
@@ -140,6 +141,6 @@ if __name__ == '__main__':
     # glosery = grocery_search('Tescobritish', 0)
     # print(get_necessary_data_from_grocery_search(glosery, 254656543))
     # print(product_data('4548736003446'))
-    # stores = store_location()
-    # extract_stores_from_results(stores)
-    print(get_product_data('05010003000131'))
+    stores = store_location()
+    extract_stores_from_results(stores)
+    # print(get_product_data('05010003000131'))
