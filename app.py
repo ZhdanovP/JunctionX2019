@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template
 from flask import request
-import dao
+from dao import ORM
 import os
 
 app = Flask(__name__)
@@ -17,18 +17,21 @@ def add():
     gtin = data['gtin']
     quantity = data['quantity']
     shop_id = data['shop_id']
-    dao.add_catalog(gtin, quantity, shop_id)
+    orm = ORM()
+    orm.add_catalog(gtin, quantity, shop_id)
     return jsonify(success=True)
 
 
 @app.route('/catalog/all', methods=['GET'])
 def get_all():
-    return jsonify(dao.get_catalog_all())
+    orm = ORM()
+    return jsonify(orm.get_catalog_all())
 
 
 @app.route('/catalog/<shop_id>', methods=['GET'])
 def get_by_shop(shop_id: str):
-    return jsonify(dao.get_catalog_by_shop(shop_id))
+    orm = ORM()
+    return jsonify(orm.get_catalog_by_shop(shop_id))
 
 
 if __name__ == '__main__':
