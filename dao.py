@@ -1,57 +1,103 @@
+import datetime
+from typing import List
+
+from sqlalchemy import MetaData, Column, String, DateTime, BigInteger, Integer
 from sqlalchemy import create_engine
-from sqlalchemy import Table, MetaData, Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, scoped_session
+
 import config
 
+Base = declarative_base()
+
 metadata = MetaData()
-catalog = Table('catalog', metadata,
-                Column('id', Integer, primary_key=True),
-                Column('gtin', String),
-                Column('quantity', String),
-                Column('shop_id', String),
-                Column('date', DateTime))
-
-cache = Table('cache', metadata,
-              Column('gtin', String),
-              Column('image', String),
-              Column('description', String),
-              Column('department', String))
 
 
-def conn():
-    user = config.db['user']
-    password = config.db['password']
-    host = config.db['host']
-    port = config.db['port']
-    database = config.db['database']
-    db_address = "postgres://{}:{}@{}:{}/{}".format(user, password, host, port, database)
-    db = create_engine(db_address)
-    return db
+class Catalog(Base):
+    __tablename__ = 'catalog'
+
+    id = Column(BigInteger, primary_key=True)
+    gtin = Column(String)
+    quantity = Column(Integer)
+    shop_id = Column(String)
+    date = Column(DateTime, default=datetime.datetime.utcnow)
+
+    def to_dict(self):
+        return {'gtin': self.gtin,
+                'quantity': self.quantity,
+                'shop_id': self.shop_id,
+                'date': self.date}
 
 
-def add_catalog(gtin: str, quantity: int, shop_id: str):
-    statement = catalog.insert().values(gtin=gtin, quantity=quantity, shop_id=shop_id)
-    conn().execute(statement)
+class Cache(Base):
+    __tablename__ = 'cache'
+
+    gtin = Column(String, primary_key=True)
+    image = Column(String)
+    name = Column(String)
+    description = Column(String)
+    department = Column(String)
+
+    def to_dict(self):
+        return {'gtin': self.gtin,
+                'image': self.image,
+                'name': self.name,
+                'description': self.description,
+                'department': self.department}
 
 
-def get_catalog_all():
-    statement = catalog.select()
-    result = conn().execute(statement)
-    return [dict(row) for row in result]
+class ORM:
+    def __init__(self):
+        user = config.db['user']
+        password = config.db['password']
+        host = config.db['host']
+        port = config.db['port']
+        database = config.db['database']
+        db_address = f'postgres://{user}:{password}@{host}:{port}/{database}'
+        self.engine = create_engine(db_address)
+        self.session = self._get_session()
+
+    def _get_session(self):
+        try:
+            Session = scoped_session(sessionmaker(bind=self.engine))
+            self.session = Session()
+            return self.session
+        except Exception as e:
+            print("Can't connect to db", e)
+
+    def __del__(self):
+        self.session.commit()
+        self.session.close()
+        self.session = None
+
+    def add_catalog(self, gtin: str, quantity: int, shop_id: str):
+        catalog = Catalog(gtin=gtin, quantity=quantity, shop_id=shop_id)
+        self.session.add(catalog)
+        self.session.commit()
+
+    def get_catalog_all(self):
+        result = self.session.query(Catalog).all()
+        return [row.to_dict() for row in result]
+
+    def get_catalog_by_shop(self, shop_id: str):
+        result = self.session.query(Catalog).filter_by(shop_id=shop_id).all()
+        return [row.to_dict() for row in result]
+
+    def add_cache(self, gtin: str, name: str, image: str, description: str, department: str):
+        cache = Cache(gtin=gtin, name=name, image=image, description=description, department=department)
+        self.session.add(cache)
+        self.session.commit()
+
+    def get_cache(self, gtin: str) -> List:
+        result = self.session.query(Cache).filter_by(gtin=gtin).all()
+        return [row.to_dict() for row in result]
 
 
-def get_catalog_by_shop(shop_id: str):
-    statement = catalog.select().where(catalog.c.shop_id == shop_id)
-    result = conn().execute(statement)
-    return [dict(row) for row in result]
+if __name__ == '__main__':
+    orm = ORM()
+    orm.add_catalog('000', 1, '123')
+    orm.add_catalog('1', 1, '123')
+    orm.add_catalog('2', 1, '123')
+    orm.add_catalog('3', 1, '123')
 
-
-def add_cache(gtin: str, image: str, description: str, department: str):
-    statement = cache.insert().values(gtin=gtin, image=image, description=description, department=department)
-    conn().execute(statement)
-
-
-def get_cache(gtin: str):
-    statement = cache.select().where(cache.c.gtin == gtin)
-    result = conn().execute(statement)
-    return [dict(row) for row in result]
-
+    print(orm.get_catalog_all())

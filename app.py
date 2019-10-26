@@ -1,14 +1,97 @@
 from flask import Flask, jsonify, render_template
 from flask import request
-import dao
+from dao import ORM
 import os
 
 app = Flask(__name__)
+app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+
+
+shop_list = [
+    {
+        'value': 3245,
+        'counter': 10,
+        'address': 'Pushkina, 27'
+    },
+    {
+        'value': 6343,
+        'counter': 6,
+        'address': 'Tolstogo, 230a'
+    },
+    {
+        'value': 97687,
+        'counter': 43,
+        'address': 'Budabuda street, 12'
+    },
+    {
+        'value': 2452,
+        'counter': 0,
+        'address': 'Lorem ipsum, 117'
+    }
+]
+
+good_list = [
+    {
+        'id': 3245,
+        'name': 'Bakery',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 7
+            },
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 10
+            }
+        ]
+    },
+    {
+        'id': 97687,
+        'name': 'Pyaterochka',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 9
+            },
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 12
+            }
+        ]
+    },
+    {
+        'id': 6343,
+        'name': 'Magnit',
+        'goods': [
+            {
+                'image': '/static/images/good.png',
+                'title': 'Lorem ipsum dolor',
+                'desc': 'Dolor lorem forem ipsum dolor amet',
+                'qtt': 7
+            }
+        ]
+    },
+    {
+        'id': 2452,
+        'name': 'Bahetle',
+        'goods': [
+        ]
+    }
+]
 
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html', title='JunctionX')
+    shop_list_sorted = sorted(shop_list, key=lambda x: x['counter'], reverse=True)
+    return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted, good_list=good_list)
 
 
 @app.route('/catalog/add', methods=['POST'])
@@ -17,18 +100,21 @@ def add():
     gtin = data['gtin']
     quantity = data['quantity']
     shop_id = data['shop_id']
-    dao.add_catalog(gtin, quantity, shop_id)
+    orm = ORM()
+    orm.add_catalog(gtin, quantity, shop_id)
     return jsonify(success=True)
 
 
 @app.route('/catalog/all', methods=['GET'])
 def get_all():
-    return jsonify(dao.get_catalog_all())
+    orm = ORM()
+    return jsonify(orm.get_catalog_all())
 
 
 @app.route('/catalog/<shop_id>', methods=['GET'])
 def get_by_shop(shop_id: str):
-    return jsonify(dao.get_catalog_by_shop(shop_id))
+    orm = ORM()
+    return jsonify(orm.get_catalog_by_shop(shop_id))
 
 
 if __name__ == '__main__':
