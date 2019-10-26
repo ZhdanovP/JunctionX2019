@@ -58,11 +58,11 @@
                     {% for item in shop_list %}
                         <li class="shops__item">
                             <input type="radio"
-                                   data-longitude="{{ item.longitude }}"
-                                   data-latitude="{{ item.latitude }}"
+                                   data-longitude="{{ item.lon }}"
+                                   data-latitude="{{ item.lat }}"
                                    name="shops__item"
                                    value="{{ item.value }}"
-                                   id="{{ item.value }}" {% if item.index == 0 %} checked {% endif %}>
+                                   id="{{ item.value }}" {% if loop.index0==0 %} checked {% endif %}>
                             <label for="{{ item.value }}">
                                 {{ item.address }}
                                 <span class="shops__item-counter">{{ item.counter }}</span>

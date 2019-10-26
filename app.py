@@ -11,22 +11,30 @@ shop_list = [
     {
         'value': 3245,
         'counter': 10,
-        'address': 'Pushkina, 27'
+        'address': 'Pushkina, 27',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 6343,
         'counter': 6,
-        'address': 'Tolstogo, 230a'
+        'address': 'Tolstogo, 230a',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 97687,
         'counter': 43,
-        'address': 'Budabuda street, 12'
+        'address': 'Budabuda street, 12',
+        'lat': 47.492391,
+        'lon': 19.079964
     },
     {
         'value': 2452,
         'counter': 0,
-        'address': 'Lorem ipsum, 117'
+        'address': 'Lorem ipsum, 117',
+        'lat': 47.492391,
+        'lon': 19.079964
     }
 ]
 
