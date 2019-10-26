@@ -129,9 +129,11 @@ def get_shop_list() -> List[Dict]:
     orm = ORM()
     shops = orm.get_shops()
 
-    shop_list = [shop.update({'count': 0}) for shop in shops]
+    for shop in shops:
+        shop.update({'count': 0})
 
-    return shop_list
+    return shops
+
 
 if __name__ == '__main__':
     # Tests
