@@ -11,7 +11,7 @@ def hello_world():
     return render_template('index.html', title='JunctionX')
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/catalog/add', methods=['POST'])
 def add():
     data = request.get_json()
     gtin = data['gtin']
@@ -21,9 +21,14 @@ def add():
     return jsonify(success=True)
 
 
-@app.route('/all')
+@app.route('/catalog/all', methods=['GET'])
 def get_all():
-    return jsonify(dao.get_all())
+    return jsonify(dao.get_catalog_all())
+
+
+@app.route('/catalog/<shop_id>', methods=['GET'])
+def get_by_shop(shop_id: str):
+    return jsonify(dao.get_catalog_by_shop(shop_id))
 
 
 if __name__ == '__main__':

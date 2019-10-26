@@ -10,6 +10,12 @@ catalog = Table('catalog', metadata,
                 Column('shop_id', String),
                 Column('date', DateTime))
 
+cache = Table('cache', metadata,
+              Column('gtin', String),
+              Column('image', String),
+              Column('description', String),
+              Column('department', String))
+
 
 def conn():
     user = config.db['user']
@@ -27,7 +33,25 @@ def add_catalog(gtin: str, quantity: int, shop_id: str):
     conn().execute(statement)
 
 
-def get_all():
+def get_catalog_all():
     statement = catalog.select()
     result = conn().execute(statement)
     return [dict(row) for row in result]
+
+
+def get_catalog_by_shop(shop_id: str):
+    statement = catalog.select().where(catalog.c.shop_id == shop_id)
+    result = conn().execute(statement)
+    return [dict(row) for row in result]
+
+
+def add_cache(gtin: str, image: str, description: str, department: str):
+    statement = cache.insert().values(gtin=gtin, image=image, description=description, department=department)
+    conn().execute(statement)
+
+
+def get_cache(gtin: str):
+    statement = cache.select().where(cache.c.gtin == gtin)
+    result = conn().execute(statement)
+    return [dict(row) for row in result]
+
