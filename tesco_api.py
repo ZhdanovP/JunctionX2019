@@ -65,12 +65,11 @@ def get_product_data(gtin):
 
     offset = 0
     glosery = grocery_search(descr, offset)
-    offset += 1
     product = get_necessary_data_from_grocery_search(glosery, tpnc)
 
     while not product and offset < 10:
-        glosery = grocery_search(first_word_of_descr, offset)
         offset += 1
+        glosery = grocery_search(first_word_of_descr, offset)
         product = get_necessary_data_from_grocery_search(glosery, tpnc)
 
     if product:
