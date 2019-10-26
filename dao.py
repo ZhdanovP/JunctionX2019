@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy import Table, MetaData, Column, Integer, String, DateTime
-
+import config
 
 metadata = MetaData()
 catalog = Table('catalog', metadata,
@@ -12,7 +12,12 @@ catalog = Table('catalog', metadata,
 
 
 def conn():
-    db_address = "postgres://voexynoieveheo:b8e1d89b13851ba61e7cc7a4567d30d3613a55b19610b670a749690f4322dc76@ec2-54-246-92-116.eu-west-1.compute.amazonaws.com:5432/dck1ojnl5uc1sb"
+    user = config.db['user']
+    password = config.db['password']
+    host = config.db['host']
+    port = config.db['port']
+    database = config.db['database']
+    db_address = "postgres://{}:{}@{}:{}/{}".format(user, password, host, port, database)
     db = create_engine(db_address)
     return db
 
