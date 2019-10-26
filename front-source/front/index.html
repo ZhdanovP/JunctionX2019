@@ -20,18 +20,99 @@
     <header class="header">
         <div class="container">
             <img src="/images/logo.svg" alt="TESCO logo" class="header__logo">
-            <h1 class="header__title">Budapest - <span class="bold color-highlighted">Free Food</span></h1>
+            <h1 class="header__title">Free Food</h1>
         </div>
     </header>
     <main class="body">
         <div class="container">
+            
+            <div class="cities">
+                <ul>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');" class="cities__root">Hungary:</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');" class="cities__active">Budapest</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Debrecen</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Szeged</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Miskolc</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Pécs</a>
+                    </li>
+                    <li>
+                        <a href="javascript:alert('It\'s just an example');">Győr</a>
+                    </li>
+                </ul>
+            </div>
 
             <div class="shops">
-                <h2 class="shops__title">Shops in Budapest</h2>
                 <form>
                     <ul class="shops__list">
                         <li class="shops__item">
-                            <input type="radio" name="shops__item" value="3245" id="3245" checked>
+                            <input type="radio" name="shops__item" value="3245" id="3245" checked data-longitude="-2.132541" data-latitude="52.456001">
+                            <label for="3245">
+                                Pushkina, 27
+                                <span class="shops__item-counter">10</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="6343" id="6343" data-longitude="20.132541" data-latitude="40.456001">
+                            <label for="6343">
+                                Tolstogo, 230a
+                                <span class="shops__item-counter">6</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="97687" id="97687">
+                            <label for="97687">
+                                Budabuda street, 12
+                                <span class="shops__item-counter">43</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="2452" id="2452">
+                            <label for="2452">
+                                Lorem ipsum, 117
+                                <span class="shops__item-counter">0</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="3245" id="3245">
+                            <label for="3245">
+                                Pushkina, 27
+                                <span class="shops__item-counter">10</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="6343" id="6343">
+                            <label for="6343">
+                                Tolstogo, 230a
+                                <span class="shops__item-counter">6</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="97687" id="97687">
+                            <label for="97687">
+                                Budabuda street, 12
+                                <span class="shops__item-counter">43</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="2452" id="2452">
+                            <label for="2452">
+                                Lorem ipsum, 117
+                                <span class="shops__item-counter">0</span>
+                            </label>
+                        </li>
+                        <li class="shops__item">
+                            <input type="radio" name="shops__item" value="3245" id="3245">
                             <label for="3245">
                                 Pushkina, 27
                                 <span class="shops__item-counter">10</span>
@@ -60,10 +141,15 @@
                         </li>
                     </ul>
                 </form>
+
+                <div class="map shops__map">
+                    <span class="map__loader">Loading map...</span>
+                    <iframe src="" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                </div>
             </div>
 
             <div class="goods">
-                <h2 class="goods__title">Goods for free</h2>
+                <h2 class="goods__title">Groceries for free</h2>
 
                 <div class="goods__section" data-shop-id="3245">
                     <h3 class="goods__sub-title">Bakery</h3>
