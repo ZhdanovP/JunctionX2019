@@ -18,9 +18,9 @@ Server can be accessed via https://tesco-x.herokuapp.com/
 
 `POST /catalog/add` - adding new excees food item to catalog
 
-`POST /catalog/<shop_id>` get excess food items by shop_id
+`POST /catalog/<shop_id>` - get excess food items by shop_id
 
-`GET /catalog/all` returns JSON of all excess food data fetched from TESCO APIs
+`GET /catalog/all` - returns JSON of all excess food data fetched from TESCO APIs
 
 ## Presentation
-https://docs.google.com/presentation/d/18MVfpPrZl8RkRYwuwCpsQEH-K9ChxfWknRsDgci7zAc/edit#slide=id.g655ae6ca1b_0_197
+https://docs.google.com/presentation/d/18MVfpPrZl8RkRYwuwCpsQEH-K9ChxfWknRsDgci7zAc
