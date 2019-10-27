@@ -95,7 +95,7 @@ def barcode_processing():
     product = api.get_product_data(gtin)
 
     how_much_will_be_waist = ml.predict(product)
-    ## TODO: Send how_much_will_be_waist to mobile
+    # TODO: Send how_much_will_be_waist to mobile
 
     orm = ORM()
     orm.add_catalog(gtin, how_much_will_be_waist, shop_id)
