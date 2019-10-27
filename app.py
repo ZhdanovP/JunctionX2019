@@ -57,6 +57,11 @@ def get_by_shop(shop_id: str):
     return jsonify(orm.get_catalog_by_shop(shop_id))
 
 
+@app.route('/shop/all', methods=['GET'])
+def get_shop_all():
+    return jsonify(get_shop_list())
+
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
