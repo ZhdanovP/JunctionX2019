@@ -12,94 +12,27 @@ import tesco_api as api
 app = Flask(__name__)
 app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
-good_list = [
-    {
-        'id': 3245,
-        'goods': [
-            {
-                'category': 'Bakery',
-                'products': [
-                    {
-                        'image': '/static/images/good.png',
-                        'title': 'Lorem ipsum dolor',
-                        'desc': 'Dolor lorem forem ipsum dolor amet',
-                        'qtt': 7
-                    },
-                    {
-                        'image': '/static/images/good.png',
-                        'title': 'Lorem ipsum dolor',
-                        'desc': 'Dolor lorem forem ipsum dolor amet',
-                        'qtt': 10
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        'id': 97687,
-        'goods': [
-            {
-                'category': 'Water',
-                'products': [
-                    {
-                        'image': '/static/images/good.png',
-                        'title': 'Lorem ipsum dolor',
-                        'desc': 'Dolor lorem forem ipsum dolor amet',
-                        'qtt': 7
-                    },
-                    {
-                        'image': '/static/images/good.png',
-                        'title': 'Lorem ipsum dolor',
-                        'desc': 'Dolor lorem forem ipsum dolor amet',
-                        'qtt': 10
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        'id': 6343,
-        'goods': [
-            {
-                'category': 'Meat',
-                'products': [
-                    {
-                        'image': '/static/images/good.png',
-                        'title': 'Lorem ipsum dolor',
-                        'desc': 'Dolor lorem forem ipsum dolor amet',
-                        'qtt': 7
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        'id': 2452,
-        'goods': [
-        ]
-    }
-]
-
 
 @app.route('/')
 def hello_world():
     shops = get_shop_list()
     return render_template('index.html', title='JunctionX', shop_list=shops, good_list=get_goods_list(shops))
 
+
 @app.route('/barcode', methods=['POST'])
 def barcode_processing():
     data = request.get_json()
-    gtin = str(request.args['gtin']) #"05000119051103" #request.args)['gtin']  # "
-    shop_id =str(request.args['shop_id']) # 'fdacbf60-7b73-4678-86f4-266b86750e3b' # str(request.args['shop_id']) 
+    gtin = data['gtin']
+    shop_id = data['shop_id']
     product = api.get_product_data(gtin)
 
     how_much_will_be_waist = ml.predict(product)
-    quantity = how_much_will_be_waist
-    ## TODO: Send how_much_will_be_waist to mobile
+    # TODO: Send how_much_will_be_waist to mobile
 
     orm = ORM()
-    orm.add_catalog(gtin, quantity, shop_id)
+    orm.add_catalog(gtin, how_much_will_be_waist, shop_id)
     return jsonify(success=True)
+
 
 @app.route('/catalog/add', methods=['POST'])
 def add():
