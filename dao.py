@@ -1,5 +1,5 @@
 import datetime
-from typing import List
+from typing import List, Dict
 
 from sqlalchemy import MetaData, Column, String, DateTime, BigInteger, Integer, Float
 from sqlalchemy import create_engine
@@ -105,18 +105,21 @@ class ORM:
             print(f'Exception was raised during adding {added_type} with params {args}. {e}')
             self.session.rollback()
 
-    def __get_sth_by_values(self, returned_class, **values):
+    def __get_sth_by_values(self, returned_class, **values) -> List[Dict]:
         result = self.session.query(returned_class).filter_by(**values).all()
+        return [row.to_dict() for row in result]
+
+    def __get_all_stuff(self, returned_class) -> List[Dict]:
+        result = self.session.query(returned_class).all()
         return [row.to_dict() for row in result]
 
     def add_catalog(self, gtin: str, quantity: int, shop_id: str):
         self.__add_sth(Catalog, gtin=gtin, quantity=quantity, shop_id=shop_id)
 
     def get_catalog_all(self):
-        result = self.session.query(Catalog).all()
-        return [row.to_dict() for row in result]
+        return self.__get_all_stuff(Catalog)
 
-    def get_catalog_by_shop(self, shop_id: str):
+    def get_catalog_by_shop(self, shop_id: str) -> List[Dict]:
         return self.__get_sth_by_values(Catalog, shop_id=shop_id)
 
     def add_cache(self, gtin: str, name: str, image: str, description: str, department: str, weight: float,
@@ -124,8 +127,11 @@ class ORM:
         self.__add_sth(Cache, gtin=gtin, name=name, image=image, description=description, department=department,
                        weight=weight, price=price)
 
-    def get_cache(self, gtin: str) -> List:
+    def get_cache(self, gtin: str) -> List[Dict]:
         return self.__get_sth_by_values(Cache, gtin=gtin)
+
+    def get_caches(self) -> List[Dict]:
+        return self.__get_all_stuff(Cache)
 
     def add_shop(self, _id: str, address: str, _type: str, name: str, lon: float, lat: float):
         self.__add_sth(Shop, id=_id, address=address, type=_type, name=name, lon=lon, lat=lat)
@@ -133,18 +139,19 @@ class ORM:
     def get_shop_by_id(self, shop_id):
         return self.__get_sth_by_values(Shop, id=shop_id)
 
+    def get_shops(self) -> List[Dict]:
+        return self.__get_all_stuff(Shop)
+
 
 if __name__ == '__main__':
     orm = ORM()
-    shop_id = "fdacbf60-7b73-4678-86f4-266b86750e3b"
-    orm.add_shop(shop_id, "Budapest, VIII. kerület", "Expressz",
-                 "TESCO Expressz Bp. - Mátyás tér", 19.079964, 47.492391)
+    # shop_id = "fdacbf60-7b73-4678-86f4-266b86750e3b"
+    # orm.add_shop(shop_id, "Budapest, VIII. kerület", "Expressz",
+    #              "TESCO Expressz Bp. - Mátyás tér", 19.079964, 47.492391)
+    #
+    # orm.add_catalog('0', 1, shop_id)
+    # orm.add_catalog('1', 1, shop_id)
+    # orm.add_catalog('2', 1, shop_id)
+    # orm.add_catalog('3', 1, shop_id)
 
-    orm.add_catalog('0', 1, shop_id)
-    orm.add_catalog('1', 1, shop_id)
-    orm.add_catalog('2', 1, shop_id)
-    orm.add_catalog('3', 1, shop_id)
-
-
-
-    print(orm.get_shop_by_id(shop_id))
+    print(orm.get_shops())

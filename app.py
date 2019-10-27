@@ -1,42 +1,13 @@
+import os
+
 from flask import Flask, jsonify, render_template
 from flask import request
+
 from dao import ORM
-import os
+from tesco_api import get_shop_list, get_goods_list
 
 app = Flask(__name__)
 app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-
-
-shop_list = [
-    {
-        'value': 3245,
-        'counter': 10,
-        'address': 'Pushkina, 27',
-        'lat': 47.492391,
-        'lon': 19.079964
-    },
-    {
-        'value': 6343,
-        'counter': 6,
-        'address': 'Tolstogo, 230a',
-        'lat': 47.492391,
-        'lon': 19.079964
-    },
-    {
-        'value': 97687,
-        'counter': 43,
-        'address': 'Budabuda street, 12',
-        'lat': 47.492391,
-        'lon': 19.079964
-    },
-    {
-        'value': 2452,
-        'counter': 0,
-        'address': 'Lorem ipsum, 117',
-        'lat': 47.492391,
-        'lon': 19.079964
-    }
-]
 
 good_list = [
     {
@@ -45,19 +16,19 @@ good_list = [
             {
                 'category': 'Bakery',
                 'products': [
-                            {
-                                'image': '/static/images/good.png',
-                                'title': 'Lorem ipsum dolor',
-                                'desc': 'Dolor lorem forem ipsum dolor amet',
-                                'qtt': 7
-                            },
-                            {
-                                'image': '/static/images/good.png',
-                                'title': 'Lorem ipsum dolor',
-                                'desc': 'Dolor lorem forem ipsum dolor amet',
-                                'qtt': 10
-                            }
-                        ]
+                    {
+                        'image': '/static/images/good.png',
+                        'title': 'Lorem ipsum dolor',
+                        'desc': 'Dolor lorem forem ipsum dolor amet',
+                        'qtt': 7
+                    },
+                    {
+                        'image': '/static/images/good.png',
+                        'title': 'Lorem ipsum dolor',
+                        'desc': 'Dolor lorem forem ipsum dolor amet',
+                        'qtt': 10
+                    }
+                ]
             }
         ]
     },
@@ -67,19 +38,19 @@ good_list = [
             {
                 'category': 'Water',
                 'products': [
-                            {
-                                'image': '/static/images/good.png',
-                                'title': 'Lorem ipsum dolor',
-                                'desc': 'Dolor lorem forem ipsum dolor amet',
-                                'qtt': 7
-                            },
-                            {
-                                'image': '/static/images/good.png',
-                                'title': 'Lorem ipsum dolor',
-                                'desc': 'Dolor lorem forem ipsum dolor amet',
-                                'qtt': 10
-                            }
-                        ]
+                    {
+                        'image': '/static/images/good.png',
+                        'title': 'Lorem ipsum dolor',
+                        'desc': 'Dolor lorem forem ipsum dolor amet',
+                        'qtt': 7
+                    },
+                    {
+                        'image': '/static/images/good.png',
+                        'title': 'Lorem ipsum dolor',
+                        'desc': 'Dolor lorem forem ipsum dolor amet',
+                        'qtt': 10
+                    }
+                ]
             }
         ]
     },
@@ -89,13 +60,13 @@ good_list = [
             {
                 'category': 'Meat',
                 'products': [
-                            {
-                                'image': '/static/images/good.png',
-                                'title': 'Lorem ipsum dolor',
-                                'desc': 'Dolor lorem forem ipsum dolor amet',
-                                'qtt': 7
-                            }
-                        ]
+                    {
+                        'image': '/static/images/good.png',
+                        'title': 'Lorem ipsum dolor',
+                        'desc': 'Dolor lorem forem ipsum dolor amet',
+                        'qtt': 7
+                    }
+                ]
             }
         ]
     },
@@ -109,8 +80,8 @@ good_list = [
 
 @app.route('/')
 def hello_world():
-    shop_list_sorted = sorted(shop_list, key=lambda x: x['counter'], reverse=True)
-    return render_template('index.html', title='JunctionX', shop_list=shop_list_sorted, good_list=good_list)
+    shops = get_shop_list()
+    return render_template('index.html', title='JunctionX', shop_list=shops, good_list=get_goods_list(shops))
 
 
 @app.route('/catalog/add', methods=['POST'])

@@ -1,4 +1,5 @@
-from typing import Optional, Dict
+from collections import defaultdict
+from typing import Optional, Dict, List
 
 from requests import get
 
@@ -98,10 +99,90 @@ def get_necessary_data_from_grocery_search(grocery_search: Dict, tpnc: str) -> O
             'price': result.get('price')}
 
 
+def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Budapest'):
+    """
+    The function is used only one time to fill `Shop` table by values.
+    :param stores: Result of store_location() function works
+    :param filter_town: A town name to filter stores for
+    :return: Nothing, just placed target stores to the DB
+    """
+    all_stores = stores.get('results', [])
+    target_stores = []
+    for store in all_stores:
+        store_data = store.get('location', {})
+        coords = store_data.get('geo', {}).get('coordinates', {})
+        address = store_data.get('contact', {}).get('address')
+        if filter_town and filter_town not in address.get('town'):
+            continue
+        street = address.get('lines', [{}])[0].get('text')
+        target_stores.append({'_id': store_data.get('id'),
+                              'address': street,
+                              'lon': coords.get('longitude'),
+                              'lat': coords.get('latitude'),
+                              '_type': store_data.get('classification', {}).get('type'),
+                              'name': store_data.get('name')})
+
+    orm = ORM()
+    for store in target_stores:
+        orm.add_shop(**store)
+
+
+def get_shop_list() -> List[Dict]:
+    orm = ORM()
+    shops = orm.get_shops()
+
+    return shops
+
+
+def get_goods_list(shops: List[Dict]) -> List[Dict]:
+    orm = ORM()
+
+    goods_list = []
+    _cashes = orm.get_caches()
+    cashes = {cache.get('gtin'): cache for cache in _cashes}
+    _catalog = orm.get_catalog_all()
+    catalog = defaultdict(list)
+    for product in _catalog:
+        catalog[product.get('shop_id')].append(product)
+
+    for shop in shops:
+        shop_catalog = catalog.get(shop.get('id'))
+        if not shop_catalog:
+            shop.update({'count': 0})
+            continue
+
+        categories_dict = defaultdict(list)
+        already_checked_products = set()
+        for current_product in shop_catalog:
+            product = cashes.get(current_product.get('gtin'))
+            if not product:
+                continue
+            qtt = sum([_product['quantity'] for _product in shop_catalog
+                       if _product.get('gtin') == product.get('gtin')])
+
+            if product.get('image') not in already_checked_products:
+                categories_dict[product.get('department')].append({'image': product.get('image'),
+                                                                   'name': product.get('name'),
+                                                                   'description': product.get('description'),
+                                                                   'qtt': qtt})
+                already_checked_products.add(product.get('image'))
+
+        shop.update({'count': len(already_checked_products)})
+
+        goods = []
+        for category, products in categories_dict.items():
+            goods.append({'category': category, 'products': products})
+
+        goods_list.append({'id': shop.get('id'), 'goods': goods})
+
+    return goods_list
+
+
 if __name__ == '__main__':
     # Tests
     # glosery = grocery_search('Tescobritish', 0)
     # print(get_necessary_data_from_grocery_search(glosery, 254656543))
     # print(product_data('4548736003446'))
-    # print(store_location())
+    # stores = store_location()
+    # extract_stores_from_results(stores)
     print(get_product_data('05010003000131'))
