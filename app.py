@@ -4,7 +4,7 @@ from flask import Flask, jsonify, render_template
 from flask import request
 
 from dao import ORM
-from tesco_api import get_shop_list
+from tesco_api import get_shop_list, get_goods_list
 
 app = Flask(__name__)
 app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
@@ -80,7 +80,8 @@ good_list = [
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html', title='JunctionX', shop_list=get_shop_list(), good_list=good_list)
+    shops = get_shop_list()
+    return render_template('index.html', title='JunctionX', shop_list=shops, good_list=get_goods_list(shops))
 
 
 @app.route('/catalog/add', methods=['POST'])

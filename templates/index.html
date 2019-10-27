@@ -91,14 +91,14 @@
                             <li class="goods__item">
                                 <div class="goods__image">
                                     {% if item.image %}
-                                <img src="{{ item.image }}" alt="{{ item.title }}">
+                                <img src="{{ item.image }}" alt="{{ item.name }}">
                                 {% else %}
-                                <img src="/static/images/good.png" alt="{{ item.title }}">
+                                <img src="/static/images/good.png" alt="{{ item.name }}">
                                 {% endif %}
                                 </div>
                                 <div class="goods__info">
-                                    <span class="goods__info-row goods__info-row--title">{{ item.title }}</span>
-                                    <span class="goods__info-row goods__info-row--desc">{{ item.desc }}</span>
+                                    <span class="goods__info-row goods__info-row--title">{{ item.name }}</span>
+                                    <span class="goods__info-row goods__info-row--desc">{{ item.description }}</span>
                                     <span class="goods__info-row goods__info-row--qtt">{{ item.qtt }}</span>
                                 </div>
                             </li>
