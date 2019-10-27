@@ -31,7 +31,7 @@ def barcode_processing():
 
     orm = ORM()
     orm.add_catalog(gtin, how_much_will_be_waist, shop_id)
-    return jsonify(success=True)
+    return jsonify({'how_much_will_be_waist': how_much_will_be_waist})
 
 
 @app.route('/catalog/add', methods=['POST'])
