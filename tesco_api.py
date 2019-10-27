@@ -1,3 +1,4 @@
+import random
 from collections import defaultdict
 from typing import Optional, Dict, List
 
@@ -8,6 +9,8 @@ from dao import ORM
 TESCO_API_KEY = '438ec90168ae495ca1dd9993f594e957'
 TESCO_API_URL = 'https://dev.tescolabs.com'
 
+
+# === BASE TESCO API ===
 
 def __make_request_to_tesco(url: str, params: Dict) -> Optional[Dict]:
     """
@@ -23,7 +26,7 @@ def __make_request_to_tesco(url: str, params: Dict) -> Optional[Dict]:
         print(e)
 
 
-def grocery_search(query: str, offset: int = 0, limit: int = 10) -> Optional[Dict]:
+def grocery_search(query: str, offset: int = 0, limit: int = 20) -> Optional[Dict]:
     grocery_url = f'{TESCO_API_URL}/grocery/products'
     params = {'query': query, 'offset': offset, 'limit': limit}
     return __make_request_to_tesco(grocery_url, params)
@@ -46,6 +49,8 @@ def store_location(near: str = 'Budapest', like: Optional[str] = None,
         params['like'] = f'name:{like}'
     return __make_request_to_tesco(grocery_url, params)
 
+
+# === COMPLEX FUNCTIONS FOR DATA PROCESSING ===
 
 def get_product_data(gtin):
     db = ORM()
@@ -99,33 +104,23 @@ def get_necessary_data_from_grocery_search(grocery_search: Dict, tpnc: str) -> O
             'price': result.get('price')}
 
 
-def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Budapest'):
-    """
-    The function is used only one time to fill `Shop` table by values.
-    :param stores: Result of store_location() function works
-    :param filter_town: A town name to filter stores for
-    :return: Nothing, just placed target stores to the DB
-    """
-    all_stores = stores.get('results', [])
-    target_stores = []
-    for store in all_stores:
-        store_data = store.get('location', {})
-        coords = store_data.get('geo', {}).get('coordinates', {})
-        address = store_data.get('contact', {}).get('address')
-        if filter_town and filter_town not in address.get('town'):
-            continue
-        street = address.get('lines', [{}])[0].get('text')
-        target_stores.append({'_id': store_data.get('id'),
-                              'address': street,
-                              'lon': coords.get('longitude'),
-                              'lat': coords.get('latitude'),
-                              '_type': store_data.get('classification', {}).get('type'),
-                              'name': store_data.get('name')})
+def get_all_products_from_grocery_search(grocery_search: Dict) -> Optional[List[Dict]]:
+    products_list = grocery_search.get('uk', {}).get('ghs', {}).get('products', {}).get('results', [])
+    if not products_list:
+        print('There are no products')
+        return None
+    products = []
+    for product in products_list:
+        prod = product_data(tpnc=product.get('id'))
+        gtin = prod.get('products')[0].get('gtin')
+        description = product.get('description')[0] if product.get('description') else ''
+        products.append({'image': product.get('image'), 'name': product.get('name'), 'description': description,
+                         'department': product.get('department'), 'weight': product.get('AverageSellingUnitWeight'),
+                         'price': product.get('price'), 'gtin': gtin})
+    return products
 
-    orm = ORM()
-    for store in target_stores:
-        orm.add_shop(**store)
 
+# === DATA FOR FRONTEND ===
 
 def get_shop_list() -> List[Dict]:
     orm = ORM()
@@ -178,6 +173,63 @@ def get_goods_list(shops: List[Dict]) -> List[Dict]:
     return goods_list
 
 
+# === FILL THE TABLES ===
+
+def extract_stores_from_results(stores: Dict, filter_town: Optional[str] = 'Budapest'):
+    """
+    The function is used only one time to fill `Shop` table by values.
+    :param stores: Result of store_location() function works
+    :param filter_town: A town name to filter stores for
+    :return: Nothing, just placed target stores to the DB
+    """
+    all_stores = stores.get('results', [])
+    target_stores = []
+    for store in all_stores:
+        store_data = store.get('location', {})
+        coords = store_data.get('geo', {}).get('coordinates', {})
+        address = store_data.get('contact', {}).get('address')
+        if filter_town and filter_town not in address.get('town'):
+            continue
+        street = address.get('lines', [{}])[0].get('text')
+        target_stores.append({'_id': store_data.get('id'),
+                              'address': street,
+                              'lon': coords.get('longitude'),
+                              'lat': coords.get('latitude'),
+                              '_type': store_data.get('classification', {}).get('type'),
+                              'name': store_data.get('name')})
+
+    orm = ORM()
+    for store in target_stores:
+        orm.add_shop(**store)
+
+
+def fill_cache_table():
+    """
+    The function is used only for filling cache table
+    """
+    products = []
+    for query in ['bread', 'milk', 'rice']:
+        grocery = grocery_search(query)
+        products += get_all_products_from_grocery_search(grocery)
+
+    orm = ORM()
+    for product in products:
+        orm.add_cache(**product)
+
+
+def fill_catalog_table():
+    orm = ORM()
+
+    caches = orm.get_caches()
+    shops = orm.get_shops()
+
+    for shop in shops:
+        for items in range(1, random.randrange(3, 8)):
+            for index in range(random.randrange(0, len(caches))):
+                gtin = caches[index].get('gtin')
+                orm.add_catalog(gtin, random.randint(1, 6), shop.get('id'))
+
+
 if __name__ == '__main__':
     # Tests
     # glosery = grocery_search('Tescobritish', 0)
@@ -185,4 +237,6 @@ if __name__ == '__main__':
     # print(product_data('4548736003446'))
     # stores = store_location()
     # extract_stores_from_results(stores)
-    print(get_product_data('05010003000131'))
+    # print(get_product_data('05010003000131'))
+    # fill_cache_table()
+    fill_catalog_table()
