@@ -12,15 +12,15 @@ After that you will be in container and work folder will be mounted. Work inside
 Server can be accessed via https://tesco-x.herokuapp.com/ 
 
 ### Functionalities:
-#### '/' - [GET] all excess food data from local TESCO markets
+`GET /` - all excess food data from local TESCO markets
 
-#### '/barcode' - [POST] returns prognosed quantity which will be left unsold(potentially excess food) by the end of the working day, for particular product, shop, weight, price
+`POST /barcode` - returns prognosed quantity which will be left unsold(potentially excess food) by the end of the working day, for particular product, shop, weight, price
 
-#### 'catalog/add' - [POST] adding new excees food item to catalog
+`POST /catalog/add` - adding new excees food item to catalog
 
-#### '/catalog/<shop_id>' [GET] get excess food items by shop_id
+`POST /catalog/<shop_id>` - get excess food items by shop_id
 
-#### '/catalog/all' [GET] returns JSON of all excess food data fetched from TESCO APIs
+`GET /catalog/all` - returns JSON of all excess food data fetched from TESCO APIs
 
 ## Presentation
-https://docs.google.com/presentation/d/18MVfpPrZl8RkRYwuwCpsQEH-K9ChxfWknRsDgci7zAc/edit#slide=id.g655ae6ca1b_0_197
+https://docs.google.com/presentation/d/18MVfpPrZl8RkRYwuwCpsQEH-K9ChxfWknRsDgci7zAc
