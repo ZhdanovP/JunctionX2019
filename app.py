@@ -30,8 +30,9 @@ def barcode_processing():
     # TODO: Send how_much_will_be_waist to mobile
 
     orm = ORM()
+    products = orm.get_cache(gtin)
     orm.add_catalog(gtin, how_much_will_be_waist, shop_id)
-    return jsonify({'how_much_will_be_waist': how_much_will_be_waist})
+    return jsonify({'how_much_will_be_waist': how_much_will_be_waist, 'products': products})
 
 
 @app.route('/catalog/add', methods=['POST'])
@@ -41,8 +42,9 @@ def add():
     quantity = data['quantity']
     shop_id = data['shop_id']
     orm = ORM()
+    products = orm.get_cache(gtin)
     orm.add_catalog(gtin, quantity, shop_id)
-    return jsonify(success=True)
+    return jsonify({'quantity': quantity, 'products': products})
 
 
 @app.route('/catalog/all', methods=['GET'])
