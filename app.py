@@ -57,7 +57,7 @@ def get_by_shop(shop_id: str):
     return jsonify(orm.get_catalog_by_shop(shop_id))
 
 
-@app.route('/shop/all', methods=['GET'])
+@app.route('/shops', methods=['GET'])
 def get_shop_all():
     return jsonify(get_shop_list())
 
