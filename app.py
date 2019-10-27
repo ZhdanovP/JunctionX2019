@@ -6,6 +6,9 @@ from flask import request
 from dao import ORM
 from tesco_api import get_shop_list, get_goods_list
 
+import prediction.prediction as ml
+import tesco_api as api
+
 app = Flask(__name__)
 app._static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
@@ -83,6 +86,20 @@ def hello_world():
     shops = get_shop_list()
     return render_template('index.html', title='JunctionX', shop_list=shops, good_list=get_goods_list(shops))
 
+@app.route('/barcode', methods=['POST'])
+def barcode_processing():
+    data = request.get_json()
+    gtin = data['gtin']
+    shop_id = data['shop_id']
+
+    product = api.get_product_data(gtin)
+    how_much_will_be_waist = ml.predict(product)
+
+    ## TODO: Send how_much_will_be_waist to mobile
+
+    orm = ORM()
+    orm.add_catalog(gtin, quantity, shop_id)
+    return jsonify(success=True)
 
 @app.route('/catalog/add', methods=['POST'])
 def add():
