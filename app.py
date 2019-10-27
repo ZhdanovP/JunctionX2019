@@ -86,20 +86,21 @@ def hello_world():
     shops = get_shop_list()
     return render_template('index.html', title='JunctionX', shop_list=shops, good_list=get_goods_list(shops))
 
+
 @app.route('/barcode', methods=['POST'])
 def barcode_processing():
     data = request.get_json()
-    gtin = str(request.args['gtin']) #"05000119051103" #request.args)['gtin']  # "
-    shop_id =str(request.args['shop_id']) # 'fdacbf60-7b73-4678-86f4-266b86750e3b' # str(request.args['shop_id']) 
+    gtin = data['gtin']
+    shop_id = data['shop_id']
     product = api.get_product_data(gtin)
 
     how_much_will_be_waist = ml.predict(product)
-    quantity = how_much_will_be_waist
     ## TODO: Send how_much_will_be_waist to mobile
 
     orm = ORM()
-    orm.add_catalog(gtin, quantity, shop_id)
+    orm.add_catalog(gtin, how_much_will_be_waist, shop_id)
     return jsonify(success=True)
+
 
 @app.route('/catalog/add', methods=['POST'])
 def add():
