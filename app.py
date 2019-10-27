@@ -59,7 +59,7 @@ def get_by_shop(shop_id: str):
 
 @app.route('/shop/all', methods=['GET'])
 def get_shop_all():
-    return jsonify(get_shop_list)
+    return jsonify(get_shop_list())
 
 
 if __name__ == '__main__':
