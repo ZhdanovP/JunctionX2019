@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Black.ttf">
+            <string>Roboto-Black</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TescoScaner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I0k-pT-7jR">
+                                <rect key="frame" x="0.0" y="67" width="414" height="627"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="EC0-aU-fWw"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="BgN-V0-LZJ"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BOa-Kh-2OP">
+                                <rect key="frame" x="16" y="696" width="382" height="44"/>
+                                <color key="backgroundColor" red="0.0039215686269999999" green="0.32549019610000002" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="B1z-hO-WM9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="19"/>
+                                <state key="normal" title="Continue with selected">
+                                    <color key="titleColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="selectAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dgh-xf-eLz"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="I0k-pT-7jR" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.7" id="UiE-SO-2mW"/>
+                            <constraint firstItem="BOa-Kh-2OP" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" constant="-32" id="dEP-t2-5iy"/>
+                            <constraint firstItem="I0k-pT-7jR" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" multiplier="0.84" id="gy0-Xo-aNg"/>
+                            <constraint firstItem="BOa-Kh-2OP" firstAttribute="top" secondItem="I0k-pT-7jR" secondAttribute="bottom" constant="2" id="jSn-gQ-egN"/>
+                            <constraint firstItem="BOa-Kh-2OP" firstAttribute="centerX" secondItem="I0k-pT-7jR" secondAttribute="centerX" id="m2Q-vd-teb"/>
+                            <constraint firstItem="I0k-pT-7jR" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="tRF-wz-isG"/>
+                            <constraint firstItem="I0k-pT-7jR" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="xq9-uf-5dZ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="storePicker" destination="I0k-pT-7jR" id="YO5-xu-dth"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
+        </scene>
+    </scenes>
+</document>
