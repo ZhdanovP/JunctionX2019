@@ -141,9 +141,11 @@ def get_goods_list(shops: List[Dict]) -> List[Dict]:
         catalog[product.get('shop_id')].append(product)
 
     for shop in shops:
+        goods = []
         shop_catalog = catalog.get(shop.get('id'))
         if not shop_catalog:
             shop.update({'count': 0})
+            goods_list.append({'id': shop.get('id'), 'goods': goods})
             continue
 
         categories_dict = defaultdict(list)
@@ -164,7 +166,6 @@ def get_goods_list(shops: List[Dict]) -> List[Dict]:
 
         shop.update({'count': len(already_checked_products)})
 
-        goods = []
         for category, products in categories_dict.items():
             goods.append({'category': category, 'products': products})
 
