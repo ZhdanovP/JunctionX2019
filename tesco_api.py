@@ -125,7 +125,6 @@ def get_all_products_from_grocery_search(grocery_search: Dict) -> Optional[List[
 def get_shop_list() -> List[Dict]:
     orm = ORM()
     shops = orm.get_shops()
-
     return shops
 
 
