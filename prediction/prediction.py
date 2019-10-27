@@ -1,5 +1,7 @@
 import pickle
-
+import os
+dirpath = os.getcwd()
+print("current directory is : " + dirpath)
 def do_prediction(item_weight, item_type, item_price, outlet_size):
 	"""Function to predict number of items which potentially could be sold
 
@@ -13,10 +15,8 @@ def do_prediction(item_weight, item_type, item_price, outlet_size):
 
 	#data = [[0, 9.3, 4, 1]]
 	#df = pd.DataFrame(data, columns = ['Item_Weight', 'Item_Type', 'Item_Price', 'Outlet_Size']) 
-
 	data = [[item_weight, item_type, item_price, outlet_size]]
-
-	filename = 'sale_prediction_model.sav'
+	filename = 'prediction/sale_prediction_model.sav'
 	loaded_model = pickle.load(open(filename, 'rb'))
 	result = loaded_model.predict(data)
 
